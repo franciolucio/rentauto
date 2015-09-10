@@ -134,7 +134,7 @@ class Home {
 	
 	def Connection getConnection() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver")
-		return DriverManager.getConnection("jdbc:mysql://localhost/Persistencia?user=root&password=36407")
+		return DriverManager.getConnection("jdbc:mysql://localhost/Persistencia?user=root&password=1234")
 	}
 	
 }
