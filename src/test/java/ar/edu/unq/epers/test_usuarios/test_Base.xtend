@@ -28,7 +28,7 @@ class test_Base {
 		this.mockEnviador = mock(Enviador)
 		this.sistema = new Sistema(home, mockEnviador)
 		
-		//Esto es para que cada vez que se realiza un test se borre los datos y comience a trabajar con la tabla de Usuarios vacia
+		//Esto sirve para que cada vez que se realiza un test se borre los datos y comience a trabajar con la tabla de Usuarios vacia
 		var Connection conn = null
 		var PreparedStatement ps = null
 		try{
