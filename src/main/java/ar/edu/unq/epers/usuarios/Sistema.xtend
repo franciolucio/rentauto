@@ -48,5 +48,4 @@ class Sistema {
 		else
 			throw new NuevaPasswordInvalida()
 	}
-	//a
 }
