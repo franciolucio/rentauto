@@ -28,4 +28,4 @@ import org.eclipse.xtend.lib.annotations.Accessors
 	def validate (){
 		this.validado = true
 	}
-}//a
+}
