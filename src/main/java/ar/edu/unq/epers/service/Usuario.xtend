@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.usuarios
+package ar.edu.unq.epers.service
 
 import java.sql.Date
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -25,6 +25,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 		this.codigoDeValidacion = null
 	}
 	
+	/**
+  		* El usuario cambia el estado del flag validado por true
+  		*/
 	def validate (){
 		this.validado = true
 	}

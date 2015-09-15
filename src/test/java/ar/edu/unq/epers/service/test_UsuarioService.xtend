@@ -1,14 +1,15 @@
-package ar.edu.unq.epers.test_usuarios
+package ar.edu.unq.epers.service
 
-import ar.edu.unq.epers.excepciones_usuarios.NuevaPasswordInvalida
-import ar.edu.unq.epers.excepciones_usuarios.UsuarioNoExiste
-import ar.edu.unq.epers.excepciones_usuarios.UsuarioYaExiste
-import ar.edu.unq.epers.excepciones_usuarios.ValidacionException
-import ar.edu.unq.epers.usuarios.Enviador
-import ar.edu.unq.epers.usuarios.Home
-import ar.edu.unq.epers.usuarios.Mail
-import ar.edu.unq.epers.usuarios.Sistema
-import ar.edu.unq.epers.usuarios.Usuario
+import ar.edu.unq.epers.exception.NuevaPasswordInvalida
+import ar.edu.unq.epers.exception.UsuarioNoExiste
+import ar.edu.unq.epers.exception.UsuarioYaExiste
+import ar.edu.unq.epers.exception.ValidacionException
+import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
+import ar.edu.unq.epers.home.UsuarioHome
+import ar.edu.unq.epers.mailing.Enviador
+import ar.edu.unq.epers.mailing.Mail
+import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.service.UsuarioService
 import java.sql.Date
 import org.junit.Assert
 import org.junit.Before
@@ -17,19 +18,21 @@ import org.junit.Test
 import static org.mockito.Matchers.*
 import static org.mockito.Mockito.*
 
-class test_Sistema {
+class test_UsuarioService {
 	var Usuario usuario
-	var Home mockHome
+	var UsuarioHome mockHome
 	var Enviador mockEnviador
-	var Sistema sistema
+	var UsuarioService sistema
+	var GeneradorDeCodigo mockGeneradorDeCodigo
 	
 	@Before
 	def void setUp() {
 		this.usuario = new Usuario("Alan", "Marino", "marinoalan", "1234", "marinoalan@gmail.com", new Date(115,10,12))
 																	//Año -> 2015 = 1900 + 115 // Mes -> 11 = 10 + 1 // Dia -> 12
-		this.mockHome = mock(Home)
+		this.mockHome = mock(UsuarioHome)
 		this.mockEnviador = mock(Enviador)
-		this.sistema = new Sistema(mockHome,mockEnviador)
+		this.mockGeneradorDeCodigo = mock(GeneradorDeCodigo)
+		this.sistema = new UsuarioService(mockHome, mockEnviador,mockGeneradorDeCodigo)
 	}
 	
 	
@@ -37,94 +40,70 @@ class test_Sistema {
 	def test_BienRegistrado() {
 		when(this.mockHome.existeUsuario(usuario)).thenReturn(false)
 		sistema.registrarUsuario(usuario)
-		verify(mockHome).ingresarUsuario(usuario)
+		verify(mockHome).actualizar(usuario,this.mockHome.insertar())
 	}
 
-	@Test
+	@Test (expected = UsuarioYaExiste )
 	def test_MalRegistrado() throws Exception{
 		when(this.mockHome.existeUsuario(usuario)).thenReturn(true)
-		try {
-			sistema.registrarUsuario(usuario)
-			Assert.fail()
-		}catch (UsuarioYaExiste u){
-			u.printStackTrace()
-		}
+		sistema.registrarUsuario(usuario)
+		Assert.fail()
 	}
 	
-	@Test
+	@Test (expected = ValidacionException )
 	def test_NoSePuedeValidarCuenta() throws Exception{
-		when(this.mockHome.getUsuarioPorValidacion(usuario.getCodigoDeValidacion())).thenReturn(null)
-		try {
-			sistema.validarCuenta("CODIGO ERRONEO")
-			Assert.fail()
-		}catch (ValidacionException v){
-			v.printStackTrace()
-		}
+		when(this.mockHome.getUsuarioPor(usuario.getCodigoDeValidacion(),"codigoDeValidacion")).thenReturn(null)
+		sistema.validarCuenta("CODIGO ERRONEO")
+		Assert.fail()
 	}
 	
 	@Test
 	def test_ValidarCuenta() {
-		when(this.mockHome.getUsuarioPorValidacion(usuario.getCodigoDeValidacion())).thenReturn(usuario)
+		when(this.mockHome.getUsuarioPor(usuario.getCodigoDeValidacion(),"codigoDeValidacion")).thenReturn(usuario)
 		sistema.validarCuenta(usuario.getCodigoDeValidacion())
 		Assert::assertEquals(true,this.usuario.getValidado())
 	}
 	
 	@Test
 	def test_IngresarUsuario() {
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(usuario)
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(usuario)
 		Assert::assertEquals(usuario,sistema.ingresarUsuario(usuario.getNombreDeUsuario(),usuario.getPassword()))
 	}
 	
-	@Test
+	@Test (expected = UsuarioNoExiste )
 	def test_NoSePuedeIngresarUsuario_PorqueNoExisteUsuario() throws Exception{
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(null)
-		try {
-			sistema.ingresarUsuario(usuario.getNombreDeUsuario(),usuario.getPassword())
-			Assert.fail()
-		}catch (UsuarioNoExiste v){
-			v.printStackTrace()
-		}
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(null)
+		sistema.ingresarUsuario(usuario.getNombreDeUsuario(),usuario.getPassword())
+		Assert.fail()
 	}
 	
-	@Test
+	@Test (expected = UsuarioNoExiste )
 	def test_NoSePuedeIngresarUsuario_PorqueEstaMalLaPassword() throws Exception{
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(usuario)
-		try {
-			sistema.ingresarUsuario(usuario.getNombreDeUsuario(),"PASSWORD INVALIDO")
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(usuario)
+		sistema.ingresarUsuario(usuario.getNombreDeUsuario(),"PASSWORD INVALIDO")
 			Assert.fail()
-		}catch (UsuarioNoExiste v){
-			v.printStackTrace()
-		}
 	}
 	
 	@Test
 	def test_CambiarPassword() {
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(usuario)
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(usuario)
 		sistema.cambiarPassword(usuario.getNombreDeUsuario(),usuario.getPassword(),"nuevaPassword")
 		Assert::assertEquals("nuevaPassword",usuario.getPassword())
 	}
 	
-	@Test
-	def test_NoSePuedeCambiarPassword_PorqueNoExisteUsuario() throws Exception{
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(null)
-		try {
-			sistema.cambiarPassword(usuario.getNombreDeUsuario(),usuario.getPassword(),"nuevaPassword")
-			Assert.fail()
-		}catch (NuevaPasswordInvalida v){
-			v.printStackTrace();
-		}
+	@Test(expected = NuevaPasswordInvalida )
+	def test_NoSePuedeCambiarPassword_PorqueNoExisteUsuario() {
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(null)
+		sistema.cambiarPassword(usuario.getNombreDeUsuario(),usuario.getPassword(),"nuevaPassword")
+		Assert.fail()
 	}
 	
-	@Test
-	def test_NoSePuedeCambiarPassword_PorqueEstaMalLaPassword() throws Exception{
-		when(this.mockHome.getUsuarioPorNombreDeUsuario(usuario.getNombreDeUsuario())).thenReturn(usuario)
-		try {
+	@Test(expected = NuevaPasswordInvalida )
+	def test_NoSePuedeCambiarPassword_PorqueEstaMalLaPassword() {
+		when(this.mockHome.getUsuarioPor(usuario.getNombreDeUsuario(),"nombreDeUsuario")).thenReturn(usuario)
 			sistema.cambiarPassword(usuario.getNombreDeUsuario(),"PASSWORD INVALIDO","nuevaPassword")
 			Assert.fail()
-		}catch (NuevaPasswordInvalida v){
-			v.printStackTrace()
 		}
-	}
 	
 	@Test
 	def test_EnviarMail() {

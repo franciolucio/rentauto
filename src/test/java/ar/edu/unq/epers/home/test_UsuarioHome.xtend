@@ -1,9 +1,11 @@
-package ar.edu.unq.epers.test_usuarios
+package ar.edu.unq.epers.home
 
-import ar.edu.unq.epers.usuarios.Enviador
-import ar.edu.unq.epers.usuarios.Home
-import ar.edu.unq.epers.usuarios.Sistema
-import ar.edu.unq.epers.usuarios.Usuario
+import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
+import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigoDummy
+import ar.edu.unq.epers.home.UsuarioHome
+import ar.edu.unq.epers.mailing.Enviador
+import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.service.UsuarioService
 import java.sql.Connection
 import java.sql.Date
 import java.sql.PreparedStatement
@@ -14,19 +16,21 @@ import org.junit.Test
 
 import static org.mockito.Mockito.*
 
-class test_Base {
+class test_UsuarioHome {
 	var Usuario usuario
-	var Home home
+	var UsuarioHome home
 	var Enviador mockEnviador
-	var Sistema sistema
+	var UsuarioService sistema
+	var GeneradorDeCodigo generadorDeCodigo
 	
 	@Before
 	def void setUp() {
 		this.usuario = new Usuario("Alan", "Marino", "marinoalan", "1234", "marinoalan@gmail.com", new Date(115,10,12))
 																	//Año -> 2015 = 1900 + 115 // Mes -> 11 = 10 + 1 // Dia -> 12
-		this.home = new Home()
+		this.home = new UsuarioHome()
 		this.mockEnviador = mock(Enviador)
-		this.sistema = new Sistema(home, mockEnviador)
+		this.generadorDeCodigo = new GeneradorDeCodigoDummy
+		this.sistema = new UsuarioService(home, mockEnviador,generadorDeCodigo)
 		
 		//Esto sirve para que cada vez que se realiza un test se borre los datos y comience a trabajar con la tabla de Usuarios vacia
 		var Connection conn = null

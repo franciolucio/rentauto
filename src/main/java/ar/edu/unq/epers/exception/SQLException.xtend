@@ -1,8 +1,9 @@
 package ar.edu.unq.epers.exception
 
-class NuevaPasswordInvalida extends Exception {
+class SQLException extends Exception {
 	
 	new(){
 		super("")
 	}
 }
+	

@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.excepciones_usuarios
+package ar.edu.unq.epers.exception
 
 class UsuarioNoExiste extends Exception {
 	

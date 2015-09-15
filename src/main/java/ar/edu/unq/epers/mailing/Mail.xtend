@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.usuarios
+package ar.edu.unq.epers.mailing
 
 class Mail {
 	

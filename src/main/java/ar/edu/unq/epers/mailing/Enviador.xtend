@@ -1,9 +1,6 @@
-package ar.edu.unq.epers.usuarios
+package ar.edu.unq.epers.mailing
 
-class Enviador implements EnviadorDeMails {
-	
-	override enviarMail(Mail mail) {
-		
-	}
-	
+interface Enviador {
+	 
+	def void enviarMail(Mail mail)
 }
