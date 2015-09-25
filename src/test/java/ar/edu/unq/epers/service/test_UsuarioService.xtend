@@ -5,11 +5,9 @@ import ar.edu.unq.epers.exception.UsuarioNoExiste
 import ar.edu.unq.epers.exception.UsuarioYaExiste
 import ar.edu.unq.epers.exception.ValidacionException
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
-import ar.edu.unq.epers.home.UsuarioHome
+import ar.edu.unq.epers.home.usuario.UsuarioHome
 import ar.edu.unq.epers.mailing.Enviador
 import ar.edu.unq.epers.mailing.Mail
-import ar.edu.unq.epers.service.Usuario
-import ar.edu.unq.epers.service.UsuarioService
 import java.sql.Date
 import org.junit.Assert
 import org.junit.Before

@@ -2,7 +2,7 @@ package ar.edu.unq.epers.home
 
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigoDummy
-import ar.edu.unq.epers.home.UsuarioHome
+import ar.edu.unq.epers.home.usuario.UsuarioHome
 import ar.edu.unq.epers.mailing.Enviador
 import ar.edu.unq.epers.service.Usuario
 import ar.edu.unq.epers.service.UsuarioService

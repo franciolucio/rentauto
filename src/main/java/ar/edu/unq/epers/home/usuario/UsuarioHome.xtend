@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.home
+package ar.edu.unq.epers.home.usuario
 
 import ar.edu.unq.epers.service.Usuario
 import java.sql.Connection

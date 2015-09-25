@@ -3,21 +3,45 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
  
 <hibernate-mapping>
-	 <class name="ar.edu.unq.epers.Auto" table="" >
+
+	 <class name="ar.edu.unq.epers.Auto" table="Auto" >
         <id name="id" type="java.lang.Integer">
-            <column name="J_ID" />
+            <column name="ID" />
             <generator class="identity" />
         </id>
 
-        <property name="nombre" type="string">
-            <column name="J_NOMBRE" length="20" not-null="true" unique="false" />
+        <property name="marca" type="string">
+            <column name="MARCA" length="36" not-null="true" unique="false"/>
         </property>
                 
-        <property name="apellido" type="string">
-            <column name="J_APELLIDO" length="20" not-null="true" unique="false" />
+        <property name="modelo" type="string">
+            <column name="MODELO" length="36" not-null="true" unique="false"/>
         </property>
-        <property name="nroCamiseta" type="int">
-            <column name="J_NRO" not-null="false" unique="false"/>
+       
+        <property name="año" type="java.lang.Integer">
+            <column name="AÑO" not-null="false" unique="false"/>
         </property>
+        
+        <property name="patente" type="string">
+            <column name="PATENTE" lenght="36" not-null="false" unique="true"/>
+        </property>
+        
+        <property name="costoBase" type="double">
+            <column name="COSTO_BASE" not-null="false" unique="false"/>
+        </property>
+       
+        <one-to-many name="categoria" class="ar.edu.unq.epers.model.Categoria">
+            <column name="CATEGORIA" not-null="false" cascade="save-update"/>
+        </property>
+        
+        <bag name="reservas" inverse="true" cascade="save-update">
+        	<key column="RESERVAS" />
+        	<one-to-many class="ar.edu.unq.epers.model.Reserva"/>
+        </bag>
+        
+        <one-to-many name="ubicacionInicial" class="ar.edu.unq.epers.model.Ubicacion">
+            <column name="UBICACION_INICIAL" not-null="false" cascade="save-update"/>
+        </property>
+
     </class>
 </hibernate-mapping>
