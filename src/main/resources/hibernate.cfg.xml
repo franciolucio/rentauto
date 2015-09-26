@@ -6,15 +6,20 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/Epers_EjHibernate</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/alumnos</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <property name="show_sql">true</property>
 
-        <mapping resource="unq/tpi/persistencia/Jugador.hbm.xml"></mapping>
-		
+        <mapping resource="mappings/Empresa.hbm.xml"/>
+        <mapping resource="mappings/Reserva.hbm.xml"/>
+        <mapping resource="mappings/Ubicacion.hbm.xml"/>
+        <mapping resource="mappings/Auto.hbm.xml"/>
+        <mapping resource="mappings/Usuario.hbm.xml"/>
+        
     </session-factory>
+    
 </hibernate-configuration>

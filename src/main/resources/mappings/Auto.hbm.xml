@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+ 
+    <class name="ar.edu.unq.epers.model.Auto" table="AUTOS">
+
+		<id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+ 
+        <property name="marca" type="string" column="MARCA" length="36" not-null="true"/>
+              
+        <property name="modelo" type="string" column="MODELO" length="36" not-null="true"/>
+
+		<property name="año" type="int" column="ANIO" length="36" not-null="true"/>
+		
+	  	<property name="patente" type="string" column="PATENTE" length="36" not-null="true" unique="true"/>
+	  	
+        <property name="costoBase" type="double" column="COSTO_BASE" not-null="true"/>
+        
+        <many-to-one name="categoria" column="CATEGORIA" unique="true" class="ar.edu.unq.epers.model.Categoria" not-null="false" cascade="all"/>
+        
+        <many-to-one name="ubicacionInicial" column="UBICACION_INICIAL" class="ar.edu.unq.epers.model.Ubicacion" not-null="false" cascade="all"/>
+		
+		<bag name="reservas" cascade="all">
+			<key column="ID_AUTO"/>
+				<many-to-many column="ID_RESERVA" class="ar.edu.unq.epers.model.Reserva"/>
+		</bag>
+
+    </class>
+
+</hibernate-mapping>

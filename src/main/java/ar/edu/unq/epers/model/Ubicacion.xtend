@@ -7,6 +7,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Ubicacion {
 	String nombre
 	
+	new(){
+		
+	}
 	new(String nombre){
 		this.nombre = nombre
 	}
@@ -14,5 +17,7 @@ class Ubicacion {
 
 @Accessors 
 class UbicacionVirtual extends Ubicacion{
-	List<Ubicacion> ubicaciones
+	List<Ubicacion> ubicaciones = newArrayList
+	
+	new(){}
 }
