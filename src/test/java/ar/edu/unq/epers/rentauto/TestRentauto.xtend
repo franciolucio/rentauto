@@ -35,18 +35,19 @@ class TestRentauto extends SetUpGeneral{
 		manejadorDeHomes.hacerReserva(empresa, reserva01)
 		manejadorDeHomes.hacerReserva(empresa, reserva02)
 		
-		var autosDisponibles01 = manejadorDeHomes.autosDisponibles(retiro, nuevaFecha(2015, 01, 01))
+		var autosDisponibles01 = manejadorDeHomes.autosDisponibles(aeroparque, nuevaFecha(2015, 06, 30))
 		// En esa fecha no hay reservas para ninguno de los dos autos
-		Assert::assertEquals(2, autosDisponibles01.size)
+		Assert::assertEquals(0, autosDisponibles01.size)
 		
-		var autosDisponibles02 = manejadorDeHomes.autosDisponibles(retiro, nuevaFecha(2015, 04, 11))
+		var autosDisponibles02 = manejadorDeHomes.autosDisponibles(aeroparque, nuevaFecha(2015, 04, 11))
 		// En esa fecha solo hay un auto reservado(auto01)
 		Assert::assertEquals(1, autosDisponibles02.size)
 		
-		var autosDisponibles03 = manejadorDeHomes.autosDisponibles(retiro, nuevaFecha(2015, 06, 30))
+		var autosDisponibles03 = manejadorDeHomes.autosDisponibles(aeroparque, nuevaFecha(2017, 06, 30))
 		//En esa fecha los dos autos estan reservados (auto01 y auto02)
-		Assert::assertEquals(0, autosDisponibles03.size)
+		Assert::assertEquals(2, autosDisponibles03.size)
 		
+		Assert::assertEquals(aeroparque,auto01.ubicacionParaDia(nuevaFecha(2017, 06, 30)))
 	}
 	
 	@Test
