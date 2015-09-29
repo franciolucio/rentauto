@@ -1,31 +1,30 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
-
 <hibernate-mapping>
  
-    <class name="ar.edu.unq.epers.model.Empresa" table="EMPRESA">
+    <class name="ar.edu.unq.epers.model.Empresa" table="empresas">
  		
-		<id name="id" column="ID">
+		<id name="id" column="id">
 		    <generator class="increment"/>
 		</id>
 		
-        <property name="cuit" type="string" column="CUIT" length="36" not-null="true"/>
+        <property name="cuit" type="string" column="cuit" length="20" not-null="true"/>
         
-        <property name="nombreEmpresa" type="string" column="NOMBRE_EMPRESA" length="36" not-null="true" />
+        <property name="nombreEmpresa" type="string" column="nombreEmpresa" length="50" not-null="true" />
         
         <bag name="usuarios" cascade="all">
 			<key column="id_empresa"/>
-	        <many-to-many column="id_usuario" class="ar.edu.unq.epers.model.Usuario"/>
-		</bag>
+	        <many-to-many column="id_usuario" class="ar.edu.unq.epers.service.Usuario"/>
+		</bag >
 		
 		<bag name="reservas" cascade="all">
 			<key column="id_empresa"/>
 			<many-to-many  column="id_reserva" class="ar.edu.unq.epers.model.Reserva"/>
 		</bag>
         
-        <property name="cantidadMaximaDeReservasActivas" type="int" column="CANTIDAD_MAXIMA_DE_RESERVAS_ACTIVAS" length="36" not-null="true"/>    
+        <property name="cantidadMaximaDeReservasActivas" type="int" column="cantidadMaximaDeReservasActivas" length="5" not-null="true"/>    
             
-        <property name="valorMaximoPorDia" type="double" column="VALOR_MAXIMO_POR_DIA" length="36" not-null="true" />
+        <property name="valorMaximoPorDia" type="double" column="valorMaximoPorDia" length="7" not-null="true" />
         
         <bag name="categoriasAdmitidas" cascade="all">
 			<key column="id_empresa"/>

@@ -25,7 +25,7 @@ class TestRentauto extends SetUpGeneral{
 		Assert::assertEquals("Retiro",reservaObtenida.origen.nombre)
 		Assert::assertEquals("Aeroparque",reservaObtenida.destino.nombre)
 		Assert::assertEquals(nuevaFecha(2015, 03, 01),reservaObtenida.inicio)
-		Assert::assertEquals(nuevaFecha(2015, 03, 05),reservaObtenida.fin)
+		Assert::assertEquals(nuevaFecha(2015, 07, 01),reservaObtenida.fin)
 		Assert::assertEquals("Peugeot",reservaObtenida.auto.marca)
 		
 	}
@@ -54,7 +54,7 @@ class TestRentauto extends SetUpGeneral{
 		manejadorDeHomes.hacerReserva(empresa, reserva01)
 		manejadorDeHomes.hacerReserva(empresa, reserva02)
 		
-		var autosPosibles = manejadorDeHomes.autosPosibles(retiro, aeroparque, nuevaFecha(2015, 03, 01), nuevaFecha(2015, 06, 24), categoriaFamiliar)
+		var autosPosibles = manejadorDeHomes.autosPosibles(retiro, aeroparque, nuevaFecha(2015, 03, 01), nuevaFecha(2015, 07, 01), categoriaFamiliar)
 		//Solo hay un auto posible para los datos buscados (auto01)
 		Assert::assertEquals(1, autosPosibles.size)
 	}

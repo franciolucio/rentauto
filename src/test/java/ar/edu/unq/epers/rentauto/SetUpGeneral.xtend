@@ -8,6 +8,8 @@ import ar.edu.unq.epers.model.Familiar
 import ar.edu.unq.epers.model.Reserva
 import ar.edu.unq.epers.model.Ubicacion
 import ar.edu.unq.epers.model.UbicacionVirtual
+import ar.edu.unq.epers.service.Usuario
+import java.sql.Date
 import org.junit.Before
 
 import static ar.edu.unq.epers.extensions.DateExtensions.*
@@ -23,10 +25,11 @@ class SetUpGeneral {
 	var protected Auto auto02
 	var protected Reserva reserva01
 	var protected Reserva reserva02
+	var protected Usuario usuario
 
 	@Before
 	def void setUp() {
-		
+		this.usuario = new Usuario("Alan", "Marino", "marinoalan", "1234", "marinoalan@gmail.com", new Date(115,10,12))
 		empresa = new Empresa => [
 			cuit = "30-12345678-40"
 			nombreEmpresa = "Empresa Somos Nosotros"
@@ -48,7 +51,7 @@ class SetUpGeneral {
 		auto01 = new Auto("Peugeot", "206", 2000, "OPQ231", categoriaFamiliar, 80D, retiro)
 		auto02 = new Auto("Ford", "fiesta", 2015, "NRE763", categoriaDeportivo, 150D, retiro)
 		
-		//empresa.usuarios.add() agregar un usuario a la empresa
+		empresa.usuarios.add(usuario)
 		
 		reserva01 = new Reserva => [
 			origen = this.retiro
@@ -56,7 +59,7 @@ class SetUpGeneral {
 			inicio = nuevaFecha(2015, 03, 01)
 			fin = nuevaFecha(2015, 07, 01)
 			it.auto = this.auto01
-			//it.usuario =
+			it.usuario = usuario
 		]
 		
 		reserva02 = new Reserva => [
@@ -65,7 +68,7 @@ class SetUpGeneral {
 			inicio = nuevaFecha(2015, 06, 25)
 			fin = nuevaFecha(2016, 06, 25)
 			it.auto = this.auto02
-			//it.usuario = 
+			it.usuario = usuario
 		]
 		
 	}

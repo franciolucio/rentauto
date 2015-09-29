@@ -1,10 +1,13 @@
 package ar.edu.unq.epers.service
 
+import ar.edu.unq.epers.model.Reserva
 import java.sql.Date
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
-@Accessors class Usuario{
+@Accessors class Usuario {
 
+	var Integer id
 	var String nombre;
 	var String apellido;
 	var String nombreDeUsuario;
@@ -13,6 +16,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 	var Date fechaDeNacimiento;
 	var Boolean validado;
 	var String codigoDeValidacion
+	var List<Reserva> reservas
+
+	new () {}
 	
 	new (String nombre, String apellido, String nombreDeUsuario, String password, String email, Date fechaDeNacimiento){
 		this.nombre = nombre;
@@ -23,6 +29,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.validado = false;
 		this.codigoDeValidacion = null
+		this.reservas = newArrayList
 	}
 	
 	/**
@@ -31,4 +38,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 	def validate (){
 		this.validado = true
 	}
+	
+	def agregarReserva(Reserva reserva) {
+		reservas.add(reserva)
+	}	
 }

@@ -1,10 +1,12 @@
 package ar.edu.unq.epers.model
 
+import ar.edu.unq.epers.service.Usuario
 import java.util.Date
 import org.eclipse.xtend.lib.annotations.Accessors
-import static ar.edu.unq.epers.extensions.DateExtensions.*
 import org.joda.time.DateTime
 import org.joda.time.Days
+
+import static ar.edu.unq.epers.extensions.DateExtensions.*
 
 @Accessors
 class Reserva {
@@ -14,8 +16,11 @@ class Reserva {
 	Date inicio
 	Date fin
 	Auto auto
-	IUsuario usuario
+	Usuario usuario
+	Integer id
 
+	new(){}
+	
 	def costo() {
 		val cantidadDeDias = Days.daysBetween(new DateTime(inicio), new DateTime(fin)).days
 		return cantidadDeDias * auto.costoTotal;
@@ -62,6 +67,8 @@ class ReservaEmpresarial extends Reserva{
 	Empresa empresa
 	String nombreContacto
 	String cargoContacto
+	
+	new(){}
 	
 	override reservar(){
 		super.reservar()

@@ -12,11 +12,12 @@ class Auto {
 	String patente
 	Double costoBase
 	Categoria categoria
+	Integer id
 	
 	//Debe estar ordenado
 	List<Reserva> reservas = newArrayList()
 	Ubicacion ubicacionInicial
-
+	new(){}
 	new(String marca, String modelo, Integer anio, String patente, Categoria categoria, Double costoBase, Ubicacion ubicacionInicial){
 		this.marca = marca
 		this.modelo = modelo

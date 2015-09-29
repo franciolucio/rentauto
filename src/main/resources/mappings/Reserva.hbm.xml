@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
-
 <hibernate-mapping>
  
 	<class name="ar.edu.unq.epers.model.Reserva" table="reservas">
@@ -9,19 +8,32 @@
 			<generator class="increment"/>
 		</id>
 		
-		<property name="inicio" type="java.util.Date" column="INICIO" not-null="true"/>
+		<property name="inicio" type="java.util.Date" column="inicio" not-null="true" />
 		
-		<property name="fin" type="java.util.Date" column="FIN" not-null="true"/>
+		<property name="fin" type="java.util.Date" column="fin" not-null="true"/>
 		
-		<many-to-one name="origen" column="ORIGEN" class="ar.edu.unq.epers.model.Ubicacion" not-null="true" cascade="all" lazy="false"/>
+		<many-to-one name="origen" column="origen" class="ar.edu.unq.epers.model.Ubicacion" not-null="true" cascade="all" lazy="false"/>
 		
-		<many-to-one name="destino" column="DESTINO" class="ar.edu.unq.epers.model.Ubicacion" not-null="true" cascade="all" lazy="false"/>
+		<many-to-one name="destino" column="destino" class="ar.edu.unq.epers.model.Ubicacion" not-null="true" cascade="all" lazy="false"/>
 		
-		<many-to-one name="auto" column="AUTO" class="ar.edu.unq.epers.model.Auto" not-null="true" cascade="all" lazy="false"/>
+		<many-to-one name="auto" column="auto" class="ar.edu.unq.epers.model.Auto" not-null="true" cascade="all" lazy="false"/>
 		
-		<many-to-one name="usuario" column="USUARIO" class="ar.edu.unq.epers.model.Usuario" not-null="false" cascade="all" lazy="false"/>
+		<many-to-one name="usuario" column="usuario" class="ar.edu.unq.epers.service.Usuario" not-null="false" cascade="all" lazy="false"/>
 		
-	 </class> 
+		<joined-subclass name="ar.edu.unq.epers.model.ReservaEmpresarial" table="reservas_empresariales">
+		
+			<key column="id"/>
+		
+			<many-to-one name="empresa" column="empresa" class="ar.edu.unq.epers.model.Empresa" not-null="false" cascade="all" lazy="false"/>
+			
+			<property name="nombreContacto" type="string" column="nombreContacto" length="50" not-null="false"/>
+			
+			<property name="cargoContacto" type="string" column="cargoContacto" length="50" not-null="false"/>
+			
+		</joined-subclass>
+		
+
+    </class> 
 
 
 </hibernate-mapping>

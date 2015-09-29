@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+ 
+    <class name="ar.edu.unq.epers.service.Usuario" table="usuario">
+		<id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+ 
+        <property name="nombre" type="string" column="nombre" length="50" not-null="true"/>
+		
+		<property name="apellido" type="string" column="apellido" length="50" not-null="true"/>
+    
+    	<property name="nombreDeUsuario" type="string" column="nombreDeUsuario" length="50" not-null="true"/>
+    
+    	<property name="password" type="string" column="password" length="50" not-null="true"/>
+    	
+    	<property name="email" type="string" column="email" length="50" not-null="true"/>
+    	
+    	<property name="fechaDeNacimiento" type="date" column="fechaDeNacimiento" length="50" not-null="true"/>
+   
+   		<property name="validado" type="boolean" column="validado" length="50" not-null="true"/>
+   		
+   		<property name="codigoDeValidacion" type="string" column="codigoDeValidacion" length="255" not-null="false"/>
+   		
+   		<bag name="reservas" cascade="all" inverse="true">
+			<key column="id_auto"/>
+			<one-to-many class="ar.edu.unq.epers.model.Reserva"/>
+		</bag>
+    </class>
+
+</hibernate-mapping>

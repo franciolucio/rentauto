@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.model
 
+import ar.edu.unq.epers.service.Usuario
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -7,13 +8,16 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Empresa {
 	String cuit
 	String nombreEmpresa
+	Integer id
 	
-	List<IUsuario> usuarios = newArrayList
+	List<Usuario> usuarios = newArrayList
 	List<Reserva> reservas = newArrayList
 
 	int cantidadMaximaDeReservasActivas
 	Double valorMaximoPorDia
 	List<Categoria> categoriasAdmitidas = newArrayList
+	
+	new(){}
 	
 	def agregarReserva(Reserva unaReserva){
 		unaReserva.validarReserva
