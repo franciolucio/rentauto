@@ -16,7 +16,7 @@ class HomeAuto {
 		var Query q = SessionManager.getSession().createQuery("from Auto as auto where auto.id not in ( select reserva.auto.id from Reserva as reserva where :date between inicio and fin )") 
 	    q.setDate("date", date)
 	    var List<Auto> autosDisponibles = newArrayList
-	    var List<Auto> listaDeAutos = q.list()
+	    var List<Auto> listaDeAutos = q.list().toList
 		for(Auto a : listaDeAutos){
 			if(a.ubicacionParaDia(date).nombre == ubicacion.nombre)
 				autosDisponibles.add(a)
@@ -24,7 +24,4 @@ class HomeAuto {
 		return autosDisponibles
 	}
 	
-	def Auto get(int id) {
-		SessionManager.getSession().get(Auto, id) as Auto
-	}
 }

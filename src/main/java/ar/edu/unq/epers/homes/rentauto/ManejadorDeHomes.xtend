@@ -50,12 +50,4 @@ class ManejadorDeHomes {
 		SessionManager.runInSession([ homeReserva.delete(reserva) ])
 	}
 	
-	def getAuto(int id) {
-		SessionManager.runInSession([ homeAuto.get(id) ])
-	} 
-	
-	def getEmpresa(int id) {
-		SessionManager.runInSession([ homeEmpresa.get(id) ])
-	} 
-	
 }

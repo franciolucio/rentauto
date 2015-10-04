@@ -6,20 +6,27 @@ import ar.edu.unq.epers.model.Reserva
 import ar.edu.unq.epers.model.Ubicacion
 import java.util.Date
 import java.util.List
-import org.hibernate.Query
+import org.hibernate.Criteria
+import org.hibernate.criterion.Restrictions
 
 class HomeReserva {
 	
 	
 	def List<Auto> autosPosibles(Ubicacion origen, Ubicacion destino, Date inicio, Date fin, Categoria categoria){
-		var Query q = SessionManager.getSession().createQuery("select reserva.auto from Reserva as reserva where reserva.origen.nombre = :origen and reserva.destino.nombre = :destino and reserva.inicio = :inicio and reserva.fin = :fin and reserva.auto.categoria.nombre = :categoria")
-		q.setDate("fin", fin);
-		q.setDate("inicio",inicio);
-		q.setString("origen", origen.nombre);
-		q.setString("destino", destino.nombre);
-		q.setString("categoria", categoria.nombre);
-		q.list()
+		var Criteria cr =  SessionManager.getSession().createCriteria(Reserva)
+		addRestrictionIfNotNull(cr,"origen", origen)
+		addRestrictionIfNotNull(cr,"destino", destino)
+		addRestrictionIfNotNull(cr,"inicio", inicio)
+		addRestrictionIfNotNull(cr,"fin", fin)
+		//addRestrictionIfNotNull(cr,"auto.categoria", categoria)
+		return cr.list()
 	}
+	
+	def addRestrictionIfNotNull(Criteria criteria, String propertyName, Object value) {
+    if (value != null) {
+        criteria.add(Restrictions.eq(propertyName, value))
+    }
+}
 	
 	
 	def Reserva get(int id) {
