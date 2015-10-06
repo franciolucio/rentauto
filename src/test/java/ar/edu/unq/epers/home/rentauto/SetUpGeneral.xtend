@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.rentauto
+package ar.edu.unq.epers.home.rentauto
 
 import ar.edu.unq.epers.model.Auto
 import ar.edu.unq.epers.model.Categoria
@@ -10,6 +10,7 @@ import ar.edu.unq.epers.model.Ubicacion
 import ar.edu.unq.epers.model.UbicacionVirtual
 import ar.edu.unq.epers.service.Usuario
 import java.sql.Date
+import org.junit.After
 import org.junit.Before
 
 import static ar.edu.unq.epers.extensions.DateExtensions.*
@@ -27,9 +28,16 @@ class SetUpGeneral {
 	var protected Reserva reserva02
 	var protected Usuario usuario
 
+	@After
+	def void limpiar() {
+    SessionManager::resetSessionFactory()
+	}
+	
 	@Before
 	def void setUp() {
+	
 		this.usuario = new Usuario("Alan", "Marino", "marinoalan", "1234", "marinoalan@gmail.com", new Date(115,10,12))
+		
 		empresa = new Empresa => [
 			cuit = "30-12345678-40"
 			nombreEmpresa = "Empresa Somos Nosotros"
@@ -38,7 +46,7 @@ class SetUpGeneral {
 		]
 		
 		zonaSur = new UbicacionVirtual() => [ 
-		nombre = "Zona Sur"
+			nombre = "Zona Sur"
 		]
 		
 		zonaSur.ubicaciones.add(new Ubicacion("Berazategui"))
@@ -46,8 +54,10 @@ class SetUpGeneral {
 		
 		categoriaFamiliar = new Familiar() => [nombre = "Familiar"]
 		categoriaDeportivo = new Deportivo() => [nombre = "Deportivo"]
+		
 		retiro = new Ubicacion("Retiro")
 		aeroparque = new Ubicacion("Aeroparque")
+		
 		auto01 = new Auto("Peugeot", "206", 2000, "OPQ231", categoriaFamiliar, 80D, retiro)
 		auto02 = new Auto("Ford", "fiesta", 2015, "NRE763", categoriaDeportivo, 150D, retiro)
 		

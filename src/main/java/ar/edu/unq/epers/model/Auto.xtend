@@ -15,7 +15,7 @@ class Auto {
 	Integer id
 	
 	//Debe estar ordenado
-	List<Reserva> reservas = newArrayList()
+	List<Reserva> reservas 
 	Ubicacion ubicacionInicial
 	new(){}
 	new(String marca, String modelo, Integer anio, String patente, Categoria categoria, Double costoBase, Ubicacion ubicacionInicial){
@@ -26,6 +26,7 @@ class Auto {
 		this.costoBase = costoBase
 		this.categoria = categoria
 		this.ubicacionInicial = ubicacionInicial
+		this.reservas = newArrayList()
 	}
 
 	def getUbicacion(){
@@ -37,6 +38,7 @@ class Auto {
 		if(encontrado != null){
 			return encontrado.destino
 		}else{
+			"".equals(ubicacionInicial.nombre)
 			return ubicacionInicial
 		}
 	}

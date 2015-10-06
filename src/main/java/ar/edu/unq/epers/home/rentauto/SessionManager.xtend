@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.homes.rentauto
+package ar.edu.unq.epers.home.rentauto
 
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 import org.hibernate.Session
@@ -57,6 +57,13 @@ class SessionManager {
 		return result;
 	}
 
+	 def synchronized static resetSessionFactory() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
+            sessionFactory = null;
+        }
+    }
+    
 	def static Session getSession() {
 		tlSession.get();
 	}

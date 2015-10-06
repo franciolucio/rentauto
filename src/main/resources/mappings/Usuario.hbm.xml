@@ -24,7 +24,7 @@
    		<property name="codigoDeValidacion" type="string" column="codigoDeValidacion" length="255" not-null="false"/>
    		
    		<bag name="reservas" cascade="all" inverse="true">
-			<key column="id_auto"/>
+			<key column="usuario"/>
 			<one-to-many class="ar.edu.unq.epers.model.Reserva"/>
 		</bag>
     </class>
