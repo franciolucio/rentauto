@@ -8,26 +8,21 @@
             <generator class="increment"/>
         </id>
         
+        <discriminator column="DISC" type="string"/>
+        
         <property name="nombre" type="string" column="nombre" length="100" not-null="true"/>
         
-        <joined-subclass name="ar.edu.unq.epers.model.Turismo" table="categorias_turismo">
-        	<key column="id"/>
-	    </joined-subclass>
+        <subclass name="ar.edu.unq.epers.model.Turismo" discriminator-value="turismo">
+	    </subclass>
 	    
-	    <joined-subclass name="ar.edu.unq.epers.model.Familiar" table="categorias_familiares">
-        	<key column="id"/>
-	    </joined-subclass>
+	    <subclass name="ar.edu.unq.epers.model.Familiar" discriminator-value="familiar">
+	    </subclass>
 	    
- 	
- 		<joined-subclass name="ar.edu.unq.epers.model.TodoTerreno" table="categorias_todoTerreno">
-        	<key column="id"/>
-	    </joined-subclass>	  
+ 		<subclass name="ar.edu.unq.epers.model.TodoTerreno" discriminator-value="todoTerreno">
+	    </subclass>	  
 
- 	
- 		<joined-subclass name="ar.edu.unq.epers.model.Deportivo" table="categorias_deportivas">
-        	<key column="id"/>
-	    </joined-subclass>
- 	
-    </class>
+ 		<subclass name="ar.edu.unq.epers.model.Deportivo" discriminator-value="deportivo">
+	    </subclass>
+ 	</class>
 
 </hibernate-mapping>

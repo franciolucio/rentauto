@@ -14,12 +14,12 @@
         
         <bag name="usuarios" cascade="all">
 			<key column="id_empresa"/>
-	        <many-to-many column="id_usuario" class="ar.edu.unq.epers.service.Usuario"/>
+	        <one-to-many  class="ar.edu.unq.epers.service.Usuario"/>
 		</bag >
 		
 		<bag name="reservas" cascade="all">
 			<key column="id_empresa"/>
-			<many-to-many  column="id_reserva" class="ar.edu.unq.epers.model.Reserva"/>
+			<one-to-many class="ar.edu.unq.epers.model.Reserva"/>
 		</bag>
         
         <property name="cantidadMaximaDeReservasActivas" type="int" column="cantidadMaximaDeReservasActivas" length="5" not-null="true"/>    

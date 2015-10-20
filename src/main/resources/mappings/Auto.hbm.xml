@@ -22,10 +22,11 @@
         
         <many-to-one name="ubicacionInicial" column="ubicacionInicial" class="ar.edu.unq.epers.model.Ubicacion" not-null="false" cascade="all"/>
 		
-		<bag name="reservas" cascade="all" inverse="true" lazy="false">
+		<list name="reservas" cascade="all" inverse="false" lazy="false">
 			<key column="auto"/>
+			<list-index column = "id_auto"/>
 			<one-to-many class="ar.edu.unq.epers.model.Reserva"/>
-		</bag>
+		</list>
 
     </class>
 
