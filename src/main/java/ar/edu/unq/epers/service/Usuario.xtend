@@ -4,8 +4,11 @@ import ar.edu.unq.epers.model.Reserva
 import java.sql.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
-@Accessors class Usuario {
+@Accessors 
+@EqualsHashCode
+class Usuario {
 
 	var Integer id
 	var String nombre;
