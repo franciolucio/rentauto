@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.model;
+package ar.edu.unq.epers.persistencia.neo4j;
 
 import org.neo4j.graphdb.RelationshipType;
 

@@ -15,7 +15,7 @@ class Auto {
 	Integer id
 	
 	//Debe estar ordenado
-	List<Reserva> reservas 
+	List<Reserva> reservas
 	Ubicacion ubicacionInicial
 	new(){}
 	new(String marca, String modelo, Integer anio, String patente, Categoria categoria, Double costoBase, Ubicacion ubicacionInicial){
@@ -28,6 +28,7 @@ class Auto {
 		this.ubicacionInicial = ubicacionInicial
 		this.reservas = newArrayList()
 	}
+	
 
 	def getUbicacion(){
 		this.ubicacionParaDia(new Date());

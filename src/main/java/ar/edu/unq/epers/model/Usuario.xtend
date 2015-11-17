@@ -1,6 +1,5 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.model
 
-import ar.edu.unq.epers.model.Reserva
 import java.sql.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors

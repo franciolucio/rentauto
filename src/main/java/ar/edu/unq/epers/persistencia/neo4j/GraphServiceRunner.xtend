@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.neo4j
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.neo4j.graphdb.GraphDatabaseService

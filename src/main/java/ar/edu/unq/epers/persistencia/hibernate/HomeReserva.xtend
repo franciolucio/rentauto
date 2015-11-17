@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.home.rentauto
+package ar.edu.unq.epers.persistencia.hibernate
 
 import ar.edu.unq.epers.model.Categoria
 import ar.edu.unq.epers.model.Reserva

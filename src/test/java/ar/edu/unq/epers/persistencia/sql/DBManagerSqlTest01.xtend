@@ -1,11 +1,11 @@
-package ar.edu.unq.epers.home
+package ar.edu.unq.epers.persistencia.sql
 
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigoDummy
-import ar.edu.unq.epers.home.usuario.UsuarioHome
+import ar.edu.unq.epers.persistencia.hibernate.UsuarioHome
 import ar.edu.unq.epers.mailing.Enviador
-import ar.edu.unq.epers.service.Usuario
-import ar.edu.unq.epers.service.UsuarioService
+import ar.edu.unq.epers.model.Usuario
+import ar.edu.unq.epers.persistencia.hibernate.UsuarioService
 import java.sql.Connection
 import java.sql.Date
 import java.sql.PreparedStatement
@@ -16,7 +16,7 @@ import org.junit.Test
 
 import static org.mockito.Mockito.*
 
-class test_UsuarioHome {
+class DBManagerSqlTest01 {
 	var Usuario usuario
 	var UsuarioHome home
 	var Enviador mockEnviador

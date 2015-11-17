@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.generadorDeCodigo
 
-import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.model.Usuario
 
 interface GeneradorDeCodigo {
 	

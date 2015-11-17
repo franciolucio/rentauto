@@ -1,11 +1,10 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.neo4j
 
-import ar.edu.unq.epers.home.rentauto.HomeUsuario
-import ar.edu.unq.epers.home.rentauto.MensajeHome
 import ar.edu.unq.epers.model.Mensaje
+import ar.edu.unq.epers.model.Usuario
 import org.neo4j.graphdb.GraphDatabaseService
 
-class GraphService {
+class DBManagerNeo4j {
 
 	def usuarioHome(GraphDatabaseService graph) {
 		new HomeUsuario(graph)
@@ -39,6 +38,10 @@ class GraphService {
 		GraphServiceRunner.run[val home = usuarioHome(it);
 			home.amigos(usuario).map[home.crearUsuario(it)].toList
 		]
+	}
+	
+	def sonAmigos(Usuario usuario, Usuario usuario2){
+		GraphServiceRunner.run[usuarioHome(it).sonAmigos(usuario, usuario2);]
 	}
 	
 	def conectadosDe(Usuario usuario) {

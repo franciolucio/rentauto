@@ -1,9 +1,5 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.hibernate
 
-import ar.edu.unq.epers.home.rentauto.HomeAuto
-import ar.edu.unq.epers.home.rentauto.HomeEmpresa
-import ar.edu.unq.epers.home.rentauto.HomeReserva
-import ar.edu.unq.epers.home.rentauto.SessionManager
 import ar.edu.unq.epers.model.Auto
 import ar.edu.unq.epers.model.Categoria
 import ar.edu.unq.epers.model.Empresa
@@ -12,7 +8,7 @@ import ar.edu.unq.epers.model.Ubicacion
 import java.util.Date
 import java.util.List
 
-class ServiceRentauto {
+class DBManagerHibernate {
 	
 	/**
   		* El serviceRentauto es el encargado de contener todos los homes

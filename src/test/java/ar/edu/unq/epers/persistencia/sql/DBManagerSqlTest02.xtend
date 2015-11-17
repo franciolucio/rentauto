@@ -1,13 +1,15 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.sql
 
 import ar.edu.unq.epers.exception.NuevaPasswordInvalida
 import ar.edu.unq.epers.exception.UsuarioNoExiste
 import ar.edu.unq.epers.exception.UsuarioYaExiste
 import ar.edu.unq.epers.exception.ValidacionException
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
-import ar.edu.unq.epers.home.usuario.UsuarioHome
 import ar.edu.unq.epers.mailing.Enviador
 import ar.edu.unq.epers.mailing.Mail
+import ar.edu.unq.epers.model.Usuario
+import ar.edu.unq.epers.persistencia.hibernate.UsuarioHome
+import ar.edu.unq.epers.persistencia.hibernate.UsuarioService
 import java.sql.Date
 import org.junit.Assert
 import org.junit.Before
@@ -16,7 +18,7 @@ import org.junit.Test
 import static org.mockito.Matchers.*
 import static org.mockito.Mockito.*
 
-class test_UsuarioService {
+class DBManagerSqlTest02 {
 	var Usuario usuario
 	var UsuarioHome mockHome
 	var Enviador mockEnviador

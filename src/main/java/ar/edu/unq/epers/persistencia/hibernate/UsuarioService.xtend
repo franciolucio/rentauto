@@ -1,13 +1,13 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.hibernate
 
 import ar.edu.unq.epers.exception.NuevaPasswordInvalida
 import ar.edu.unq.epers.exception.UsuarioNoExiste
 import ar.edu.unq.epers.exception.UsuarioYaExiste
 import ar.edu.unq.epers.exception.ValidacionException
 import ar.edu.unq.epers.generadorDeCodigo.GeneradorDeCodigo
-import ar.edu.unq.epers.home.usuario.UsuarioHome
 import ar.edu.unq.epers.mailing.Enviador
 import ar.edu.unq.epers.mailing.Mail
+import ar.edu.unq.epers.model.Usuario
 
 class UsuarioService {
 	

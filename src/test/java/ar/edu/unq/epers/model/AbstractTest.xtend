@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.model
 
-import ar.edu.unq.epers.service.Usuario
 import org.junit.Before
 
 import static org.mockito.Mockito.*

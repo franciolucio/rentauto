@@ -1,9 +1,8 @@
-package ar.edu.unq.epers.home.rentauto
+package ar.edu.unq.epers.persistencia.neo4j
 
 import ar.edu.unq.epers.exception.NoSonAmigosException
 import ar.edu.unq.epers.model.Mensaje
-import ar.edu.unq.epers.model.RelacionesMensaje
-import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.model.Usuario
 import org.neo4j.graphdb.Direction
 import org.neo4j.graphdb.DynamicLabel
 import org.neo4j.graphdb.GraphDatabaseService

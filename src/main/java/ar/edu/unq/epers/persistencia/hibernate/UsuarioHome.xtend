@@ -1,6 +1,6 @@
-package ar.edu.unq.epers.home.usuario
+package ar.edu.unq.epers.persistencia.hibernate
 
-import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.model.Usuario
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.PreparedStatement

@@ -1,58 +1,60 @@
-package ar.edu.unq.epers.service
+package ar.edu.unq.epers.persistencia.neo4j
 
 import ar.edu.unq.epers.exception.NoSonAmigosException
 import ar.edu.unq.epers.model.Mensaje
-import ar.edu.unq.epers.service.Usuario
+import ar.edu.unq.epers.model.Usuario
 import org.junit.After
-import static org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class AmigosService {
+import static org.junit.Assert.*
+
+class DBManagerNeoJ4Test{
 	
-	Usuario lucio
-	Usuario alan
-	Usuario emiliano
-	Usuario pepe
-	Usuario coki
-	GraphService graphService
-	Mensaje mensaje01
-	Mensaje mensaje02
+	var DBManagerNeo4j dbManagerNeo4j
+	var Usuario lucio
+	var Usuario alan
+	var Usuario emiliano
+	var Usuario pepe
+	var Usuario coki
+	var Mensaje mensaje01
+	var Mensaje mensaje02
+
 	
 	@Before
 	def void setUp() {
+		dbManagerNeo4j = new DBManagerNeo4j
 		lucio = new Usuario =>[ id = 1 nombre = "Lucio" apellido = "Francioni" ]
 		alan = new Usuario =>[ id = 2 nombre = "Alan" apellido = "Marino" ]
 		emiliano = new Usuario =>[ id = 3 nombre = "Emiliano" apellido = "Mancuso" ]
 		pepe = new Usuario => [id = 4 nombre = "Pepe" apellido = "Argento"]
-		coki = new Usuario => [id = 4 nombre = "Coki" apellido = "Argento"]
+		coki = new Usuario => [id = 5 nombre = "Coki" apellido = "Argento"]
 		mensaje01 = new Mensaje => [ id = 1 asunto = "Persistencia" cuerpo = "Materia de TPI" ]
 		mensaje02 = new Mensaje => [ id = 2 asunto = "Interfaces" cuerpo = "Materia de CPI" ]
-		graphService = new GraphService
-		graphService.crearNodo(lucio)
-		graphService.crearNodo(alan)
-		graphService.crearNodo(emiliano)
-		graphService.crearNodo(pepe)
-		graphService.crearNodo(coki)
+		dbManagerNeo4j.crearNodo(lucio)
+		dbManagerNeo4j.crearNodo(alan)
+		dbManagerNeo4j.crearNodo(emiliano)
+		dbManagerNeo4j.crearNodo(pepe)
+		dbManagerNeo4j.crearNodo(coki)
 	}
 	
 	@After
 	def void after(){
-		graphService.eliminarNodo(lucio)
-		graphService.eliminarNodo(alan)
-		graphService.eliminarNodo(emiliano)
-		graphService.eliminarNodo(pepe)
-		graphService.eliminarNodo(coki)
-		graphService.eliminarNodo(mensaje01)
-		graphService.eliminarNodo(mensaje02)
+		dbManagerNeo4j.eliminarNodo(lucio)
+		dbManagerNeo4j.eliminarNodo(alan)
+		dbManagerNeo4j.eliminarNodo(emiliano)
+		dbManagerNeo4j.eliminarNodo(pepe)
+		dbManagerNeo4j.eliminarNodo(coki)
+		dbManagerNeo4j.eliminarNodo(mensaje01)
+		dbManagerNeo4j.eliminarNodo(mensaje02)
 	}
 
 	@Test
 	//Como usuario quiero poder agregar a mis amigos que ya son miembro del sitio. 
 	def void usuarioAgregaAmigos() {
-		graphService.crearAmistad(lucio, alan)
-		val amigosLucio = graphService.amigos(lucio)
-		val amigosAlan = graphService.amigos(alan)
+		dbManagerNeo4j.crearAmistad(lucio, alan)
+		val amigosLucio = dbManagerNeo4j.amigos(lucio)
+		val amigosAlan = dbManagerNeo4j.amigos(alan)
 		assertEquals(1, amigosLucio.length)
 		assertEquals(1, amigosAlan.length)
 	}
@@ -60,9 +62,9 @@ class AmigosService {
 	@Test
 	//Como usuario quiero poder consultar a mis amigos.
 	def void usuarioConsultaSusAmigos() {
-		graphService.crearAmistad(alan, lucio)
-		graphService.crearAmistad(emiliano, lucio)
-		val amigosLucio = graphService.amigos(lucio)
+		dbManagerNeo4j.crearAmistad(alan, lucio)
+		dbManagerNeo4j.crearAmistad(emiliano, lucio)
+		val amigosLucio = dbManagerNeo4j.amigos(lucio)
 		
 		assertEquals(2, amigosLucio.length)
 		assertTrue(amigosLucio.containsAll(#[alan, emiliano]))
@@ -71,11 +73,11 @@ class AmigosService {
 	@Test
 	//Como usuario quiero poder mandar mensajes a mis amigos.
 	def void usuarioMandaMensaje() {
-		graphService.crearAmistad(alan, lucio)
-		graphService.enviarMensaje(alan, lucio, mensaje01)
+		dbManagerNeo4j.crearAmistad(alan, lucio)
+		dbManagerNeo4j.enviarMensaje(alan, lucio, mensaje01)
 		
-		val mensajesRecibidos = graphService.mensajesRecibidos(lucio)
-		val mensajesEnviados = graphService.mensajesEnviados(alan)
+		val mensajesRecibidos = dbManagerNeo4j.mensajesRecibidos(lucio)
+		val mensajesEnviados = dbManagerNeo4j.mensajesEnviados(alan)
 	
 		assertEquals(1, mensajesRecibidos.length)
 		assertEquals(1, mensajesEnviados.length)
@@ -84,7 +86,7 @@ class AmigosService {
 	@Test (expected = NoSonAmigosException)
 	//Como usuario quiero poder mandar mensajes a mis amigos.
 	def void usuarioMandaMensajeSinSerAmigos() {
-		graphService.enviarMensaje(alan, lucio, mensaje01)
+		dbManagerNeo4j.enviarMensaje(alan, lucio, mensaje01)
 	}
 	
 	@Test
@@ -92,11 +94,11 @@ class AmigosService {
 	 * sea mis amigos y los amigos de mis amigos recursivamente.
 	 */
 	def usuarioConsultaAmigosYAmigosDeAmigos() {
-		graphService.crearAmistad(alan, emiliano)
-		graphService.crearAmistad(emiliano, lucio)
-		graphService.crearAmistad(lucio, pepe)
+		dbManagerNeo4j.crearAmistad(alan, emiliano)
+		dbManagerNeo4j.crearAmistad(emiliano, lucio)
+		dbManagerNeo4j.crearAmistad(lucio, pepe)
 		
-		val seguidoresDe = graphService.conectadosDe(alan)
+		val seguidoresDe = dbManagerNeo4j.conectadosDe(alan)
 		
 		assertFalse(seguidoresDe.contains(alan))
 		assertEquals(3, seguidoresDe.length)

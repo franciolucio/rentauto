@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.model
 
-import ar.edu.unq.epers.service.Usuario
 import java.util.Date
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.joda.time.DateTime
@@ -18,6 +17,7 @@ class Reserva {
 	Auto auto
 	Usuario usuario
 	Integer id
+	
 
 	new(){}
 	
@@ -55,7 +55,7 @@ class Reserva {
 		return 0
 	}
 	
-	def reservar(){
+	def void reservar(){
 		this.auto.agregarReserva(this)
 		this.usuario.agregarReserva(this)
 	}

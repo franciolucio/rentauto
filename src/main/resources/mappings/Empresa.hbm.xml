@@ -14,7 +14,7 @@
         
         <bag name="usuarios" cascade="all">
 			<key column="id_empresa"/>
-	        <one-to-many  class="ar.edu.unq.epers.service.Usuario"/>
+	        <one-to-many  class="ar.edu.unq.epers.model.Usuario"/>
 		</bag >
 		
 		<bag name="reservas" cascade="all">

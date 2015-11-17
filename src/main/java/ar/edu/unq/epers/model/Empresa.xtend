@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.model
 
-import ar.edu.unq.epers.service.Usuario
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -19,7 +18,14 @@ class Empresa {
 	
 	new(){}
 	
-	def agregarReserva(Reserva unaReserva){
+	new(String cuit, String nombreEmpresa, int cantidadMaximaDeReservasActivas, Double valorMaximoPorDia){
+		this.cuit = cuit
+		this.nombreEmpresa = nombreEmpresa
+		this.cantidadMaximaDeReservasActivas = cantidadMaximaDeReservasActivas
+		this.valorMaximoPorDia = valorMaximoPorDia
+	}
+	
+	def void agregarReserva(Reserva unaReserva){
 		unaReserva.validarReserva
 		reservas.add(unaReserva)
 	}
