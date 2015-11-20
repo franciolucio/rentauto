@@ -1,8 +1,12 @@
 package ar.edu.unq.epers.persistencia.mongo
 
+import ar.edu.unq.epers.model.Usuario
+import com.mongodb.BasicDBList
+import com.mongodb.BasicDBObject
 import com.mongodb.DB
 import com.mongodb.MongoClient
 import java.net.UnknownHostException
+import java.util.List
 import org.mongojack.JacksonDBCollection
 
 class SistemDB {

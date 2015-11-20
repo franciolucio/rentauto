@@ -82,5 +82,4 @@ class HomeUsuario{
 	def sonAmigos(Usuario usuario01, Usuario usuario02) {
 		return amigos(usuario01).map[crearUsuario(it)].toList.contains(usuario02)
 	}
-
 }

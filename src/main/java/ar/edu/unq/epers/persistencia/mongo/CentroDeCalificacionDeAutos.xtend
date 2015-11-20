@@ -26,7 +26,7 @@ class CentroDeCalificacionDeAutos {
 		val autoCalificado = SistemDB.instance().collection(AutoCalificado);
 		if (u1.equals(u2))
 			return autoCalificado.mongoCollection.find(DBQuery.is("nombreDelUsuarioQueLoUtilizo", u1.nombreDeUsuario))
-		if (dbManagerNeo4j.sonAmigos(u2,u1))
+		else if (dbManagerNeo4j.sonAmigos(u1,u2))
 			return autoCalificado.mongoCollection.find(DBQuery.in("calificacion.privacidad", NivelPrivacidad.SOLOAMIGOS,NivelPrivacidad.PUBLICO).and(DBQuery.is("nombreDelUsuarioQueLoUtilizo",u2.nombreDeUsuario)))
 		return autoCalificado.mongoCollection.find(DBQuery.is("calificacion.privacidad",NivelPrivacidad.PUBLICO).and(DBQuery.is("nombreDelUsuarioQueLoUtilizo",u2.nombreDeUsuario)))
 	}

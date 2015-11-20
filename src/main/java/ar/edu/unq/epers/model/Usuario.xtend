@@ -43,5 +43,19 @@ class Usuario {
 	
 	def agregarReserva(Reserva reserva) {
 		reservas.add(reserva)
+	}
+	
+	override equals(Object o){
+		if(o!=null && o.class == this.class){
+			var Usuario u = o as Usuario;
+			return this.nombreDeUsuario == u.nombreDeUsuario
+		}else{
+			return false;
+		}
+	}
+	
+	override hashCode(){
+		return this.nombreDeUsuario.hashCode()
+
 	}	
 }

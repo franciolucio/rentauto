@@ -6,6 +6,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import static org.junit.Assert.*
+import ar.edu.unq.epers.model.Usuario
 
 class DBManagerMongoTest extends AbstractTest{
 	
@@ -19,6 +20,7 @@ class DBManagerMongoTest extends AbstractTest{
 	@Before
 	def void setup(){
 		centroDeCalificacionDeAutos = new CentroDeCalificacionDeAutos()
+		
 		autoCalificado = new AutoCalificado => [
 			patente = "NSJ000"
 		]
@@ -60,6 +62,12 @@ class DBManagerMongoTest extends AbstractTest{
 	
 	}
 	
+	def realizarCalificaciones(Usuario usuario) {
+		centroDeCalificacionDeAutos.calificarAuto(usuario,autoCalificado,calificacionPrivada)
+		centroDeCalificacionDeAutos.calificarAuto(usuario,autoCalificado,calificacionPublica)
+		centroDeCalificacionDeAutos.calificarAuto(usuario,autoCalificado,calificacionSoloAmigos)
+	}
+	
 	@Test
 	def	calificarAuto(){
 		centroDeCalificacionDeAutos.calificarAuto(lucio,autoCalificado,calificacionPrivada)
@@ -70,19 +78,14 @@ class DBManagerMongoTest extends AbstractTest{
 	
 	@Test
 	def publicacionesDeUnAmigo(){
-		centroDeCalificacionDeAutos.calificarAuto(pepe,autoCalificado,calificacionPrivada)
-		centroDeCalificacionDeAutos.calificarAuto(pepe,autoCalificado,calificacionPublica)
-		centroDeCalificacionDeAutos.calificarAuto(pepe,autoCalificado,calificacionSoloAmigos)
+		realizarCalificaciones(pepe)
 		var publicaciones = centroDeCalificacionDeAutos.publicaciones(alan,pepe)
-		
-		assertEquals(2,publicaciones.size)
+		assertEquals(1,publicaciones.size)
 	}
 	
 	@Test
 	def publicacionesDeUnNoAmigo(){
-		centroDeCalificacionDeAutos.calificarAuto(coki,autoCalificado,calificacionPrivada)
-		centroDeCalificacionDeAutos.calificarAuto(coki,autoCalificado,calificacionPublica)
-		centroDeCalificacionDeAutos.calificarAuto(coki,autoCalificado,calificacionSoloAmigos)
+		realizarCalificaciones(coki)
 		var publicaciones = centroDeCalificacionDeAutos.publicaciones(alan,coki)
 		
 		assertEquals(1,publicaciones.size)
@@ -90,9 +93,7 @@ class DBManagerMongoTest extends AbstractTest{
 	
 	@Test
 	def publicacionesDeUnoMismo(){
-		centroDeCalificacionDeAutos.calificarAuto(alan,autoCalificado,calificacionPrivada)
-		centroDeCalificacionDeAutos.calificarAuto(alan,autoCalificado,calificacionPublica)
-		centroDeCalificacionDeAutos.calificarAuto(alan,autoCalificado,calificacionSoloAmigos)
+		realizarCalificaciones(alan)
 		var publicaciones = centroDeCalificacionDeAutos.publicaciones(alan,alan)
 		
 		assertEquals(3,publicaciones.size)
