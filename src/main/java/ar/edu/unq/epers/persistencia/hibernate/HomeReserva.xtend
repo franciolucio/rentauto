@@ -58,4 +58,8 @@ class HomeReserva {
 	def delete(Reserva reserva) {
 		SessionManager.getSession().delete(reserva)
 	}
+	
+	def save(Reserva r) {
+		SessionManager.getSession().saveOrUpdate(r)
+	}
 }
