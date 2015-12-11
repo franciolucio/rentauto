@@ -7,11 +7,13 @@ import com.datastax.driver.mapping.Mapper
 import com.datastax.driver.mapping.MappingManager
 import java.util.Date
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
+@Accessors
 class DbManagerCassandra 	{
 	Cluster cluster
 	Session session
-	Mapper<BusquedaAutosDisponibles> mapper
+	Mapper<BusquedaAutosDisponibles> busquedas
 
 	def createSchema() {
 		session.execute("CREATE KEYSPACE IF NOT EXISTS  simplex WITH replication = {'class':'SimpleStrategy', 'replication_factor':3};")
@@ -29,7 +31,7 @@ class DbManagerCassandra 	{
 			"PRIMARY KEY (ubicacion, fecha));"
 		)
 		
-		mapper = new MappingManager(session).mapper(BusquedaAutosDisponibles);
+		busquedas = new MappingManager(session).mapper(BusquedaAutosDisponibles);
 	}
 
 	def connect() {
@@ -38,7 +40,7 @@ class DbManagerCassandra 	{
 	}
 	
 	def buscarAutos(Ubicacion ubicacion, Date fecha) {
-		mapper.get(ubicacion,fecha)
+		busquedas.get(ubicacion,fecha)
 	}
 	
 	def guardarAutos(Ubicacion ub, Date fe, List<String> pat) {
@@ -47,6 +49,21 @@ class DbManagerCassandra 	{
 			fecha = fe
 			patentesDeAutos = pat
 		]
-		mapper.save(busqueda)
+		busquedas.save(busqueda)
+	}
+	
+	private def Boolean between (Date fecha, Date fechaInicio, Date fechaFin){
+		return (fecha.before(fechaFin) || fecha.equals(fechaFin)) && (fecha.after(fechaInicio) || fecha.equals(fechaInicio))
+	}
+	
+	def actualizarCache(String patente, Date fechaInicio, Date fechaFin, Ubicacion destino){
+		for(BusquedaAutosDisponibles b : busquedas){ 					//recorro las busquedas de autos disponibles para una fecha y ubicacion
+			if(this.between(b.fecha,fechaInicio, fechaFin)) 			//veo si la fecha esta entre la de inicio y fin
+				b.patentesDeAutos.remove(patente)						//si lo esta, elimino la patente del auto para esa fecha
+			else{														//sino
+				if (b.fecha.after(fechaFin) && destino != b.ubicacion)	//reviso las busquedas de los autos para las fechas posteriores a la fecha de fin y veo si la ubicacion es distinta del destino del auto
+					b.patentesDeAutos.remove(patente)					//si lo esta, elimino la patente del auto para esa fecha
+			}
+		}		
 	}
 }

@@ -31,24 +31,19 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 	def reservar(Empresa empresa, Reserva reserva) {
 		dbManagerHibernate.hacerReserva(empresa, reserva)
+		dbManagerCassandra.actualizarCache(reserva.auto.patente,reserva.inicio,reserva.fin,reserva.destino)
 	}
 
-	def buscarAutosDisponibles(Ubicacion ubicacion, Date fecha) {
+	def List<Auto> buscarAutosDisponibles(Ubicacion ubicacion, Date fecha) {
 		var busquedaEnCache = dbManagerCassandra.buscarAutos(ubicacion,fecha)
 		if(!(busquedaEnCache == null)){
-			return pasarDePatenteAAuto(busquedaEnCache.patentesDeAutos)
+			return dbManagerHibernate.autosPorPatentes(busquedaEnCache.patentesDeAutos)
 		}
 		else{
 			var busquedaEnHibernate = dbManagerHibernate.autosDisponibles(ubicacion, fecha)
-			
 			dbManagerCassandra.guardarAutos(ubicacion,fecha,pasarDeAutoAPatente(busquedaEnHibernate))
-		}
-		
-	}
-	
-	def List<Auto> pasarDePatenteAAuto(List<String> patentesDeAutos) {
-		//ENTRAR A HIBERNATE BUSCAR LOS DISTITNTOS AUTOS POR LAS PATENTES
-		//E IR GUARDANDOLOS EN UNA LISTA DE AUTOS
+			return busquedaEnHibernate
+			}
 	}
 	
 	private def List<String> pasarDeAutoAPatente(List<Auto> autos){

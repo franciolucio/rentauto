@@ -18,7 +18,6 @@ class Reserva {
 	Usuario usuario
 	Integer id
 	
-
 	new(){}
 	
 	def costo() {

@@ -88,6 +88,15 @@ class DBManagerHibernate {
 		SessionManager.runInSession([ homeReserva.reservasExistentes(origen, destino, inicio, fin, categoria) ])
 	}
 	
+		/**
+  		* Devuelve los autos que tienen la patente contenida en el 
+  		* listado de patentes pasado por parametro. 
+  		* @param patentes - es un listado de patentes.
+	*/
+	def List<Auto> autosPorPatentes(List<String> patentes){
+			SessionManager.runInSession([ homeAuto.autosPorPatentes(patentes ) ])
+	}
+	
 	/**
   		* Nos devuelve una reserva cuya id se encuentre en la base de datos.
   		* @param id - el objeto int es por el cual vamos a obtener dicha 

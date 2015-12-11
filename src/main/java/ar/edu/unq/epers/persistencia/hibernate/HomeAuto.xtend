@@ -35,4 +35,20 @@ class HomeAuto {
 		}
 		return autosDisponibles
 	}
+	
+	/**
+  		* Devuelve los autos que tienen la patente contenida en el 
+  		* listado de patentes pasado por parametro. 
+  		* @param patentes - es un listado de patentes.
+	*/
+	def List<Auto> autosPorPatentes(List<String> patentes){
+		var Query q = SessionManager.getSession().createQuery("from Auto") 
+	    var List<Auto> autosDisponibles = newArrayList
+	    var List<Auto> listaDeAutos = q.list().toList
+		for(Auto a : listaDeAutos){
+			if(patentes.contains(a.patente))
+				autosDisponibles.add(a)
+		}
+		return autosDisponibles
+	}
 }
